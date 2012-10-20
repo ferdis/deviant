@@ -35,8 +35,7 @@ class Router implements Iface\Router {
 			}
 		}
 		
-		$response->addHeader("404 Page Not Found")->send();
-		throw new Exception\OutOfRange("No route matched the given URI.");
+		return new Route('error', '\Deviant\Module\Error');
 	}
 
 }

@@ -1,11 +1,15 @@
 <?php
 
 namespace Deviant\Module;
+use Deviant\Library\Module\Staff;
 
-class Index implements Action {
+
+class Index extends Staff {
 	
-	public function start($request, $response) {
-		$response->notFound();
+	public $minRole = 'moderator';
+	
+	public function start() {
+		$this->response->notFound();
 		echo 'ellos from ' . __METHOD__;
 	}
 }

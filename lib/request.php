@@ -23,9 +23,6 @@ class Request implements Iface\Request {
 			$uri = $this->getUri();
 		}
 		
-//		if (!filter_var($uri, FILTER_VALIDATE_URL)) {
-//			throw new Exception\InvalidArgument("The URI is invalid.");
-//		}
 		$this->uri = $uri;
 		$this->params = $params;
 	}

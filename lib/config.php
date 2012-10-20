@@ -1,6 +1,6 @@
 <?php
 
-namespace Devaint\Library;
+namespace Deviant\Library;
 
 /**
  * Description of config
@@ -9,10 +9,14 @@ namespace Devaint\Library;
  */
 class Config {
 	
-	private $contents, $data;
-	public $allowExcpetions = false;
+	private $contents;
+	public $ini, $allowExcpetions = false;
 	
-	public function __construct($file_path, $section=false) {
+	public function __construct($section=false, $file_path=false) {
+		if (empty($file_path)) {
+			$file_path = 'config.ini';
+		}
+		
 		$this->load($file_path);
 		$this->parse($section);
 	}
@@ -23,49 +27,61 @@ class Config {
 		}
 		
 		$fp = fopen($file, 'r');
-		$buffer = array();
+		$stack = fread($fp, filesize($file));
 		
-		while(feof($fp) !== false) {
-			array_push($buffer, fread($fp, 64));
-		}
 		
 		fclose($fp);
-		$this->contents = implode($buffer);
+		$this->contents = $stack;
 	}
 	
 	private function parse($section) {
-		if (empty($contents)) {
+		if (empty($this->contents)) {
 			throw new Exception\InvalidArgument('Configuration file is empty');
 		}
 		
-		$ini = parse_ini_string($this->contents, $section);
+		$ini = parse_ini_string($this->contents, true);
+		unset($this->contents);
+		
 		if ($ini === false) {
 			throw new Exception\InvalidArgument('Error while parsing configuration file');
 		}
 		
-		$this->config = $data;
-	}
-	
-	protected function getValue($key) {
-		if (array_key_exists($key, $this->data) === false) {
-			return false;
-		}
+		$this->ini = $ini;
 		
-		return $this->data[$key];
+		if ($section !== false && is_string($section)) {
+			$this->ini = $this->getSection($section);
+		} 		
+		
+		$this->parseDotted($ini);
 	}
 	
 	protected function getSection($name) {
-		if (isset($this->data[0][0]) === false) {
+		if (array_key_exists($name, $this->ini) === false) {
 			return false;
 		}
 		
-		$section_data = $this->data[$name];
-		return function($key) use($section_data) {
-			if (array_key_exists($key, $section_data) === false) {
-				return false;
+		return $this->ini[$name];
+	}
+	
+	private function parseDotted() {
+		$build = new \stdClass;
+		
+		$ini = $this->ini;
+		
+		foreach($ini as $key => $value) {
+			if (strstr($key, '.')) {
+				$key_parts = explode('.', $key);
+				
+				if (array_key_exists($key_parts[0], $build) == false ){
+					$build->$key_parts[0] = new \stdClass();
+				}
+				
+				$build->$key_parts[0]->$key_parts[1] = empty($value) ? false : $value;
+			} else {
+				$build->$key = empty($value) ? false : $value;
 			}
-
-			return $this->data[$section_data];
-		};
+		}
+		
+		$this->ini = $build;
 	}
 }

@@ -11,14 +11,8 @@ namespace Deviant\Library;
  */
 class Dispatcher implements Iface\Dispatcher {
 
-	public function dispatch(Iface\Route $route, Iface\Request $request, Iface\Response $response) {
-		$module = $this->createModule($route);
-		
-		if (method_exists($module, 'preDispatch')) {
-			$module->preDispatch();
-		}
-		
-		$module->start($request, $response);
+	public function dispatch(Iface\Route $route, Iface\Request $request, Iface\Response $response, $module) {
+		$module->start();
 		
 		if (method_exists($module, 'preDispatch')) {
 			$module->postDispatch();
@@ -29,9 +23,5 @@ class Dispatcher implements Iface\Dispatcher {
 				$response->send();
 			}
 		}
-	}
-	
-	public function createModule(Iface\Route $route) {
-		return new $route->moduleClass;
 	}
 }

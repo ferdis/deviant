@@ -13,12 +13,11 @@ class Autoloader {
 	
 	private function load($class) {
 		$patterns = array(
-			
 			array(str_replace('\Library', '', __NAMESPACE__), null),
-			array('Module\Action', 'Library\Iface\Action'),
-			array('Module\Module', 'Library\Module'),
+//			array('Module\Action', 'Library\Iface\Action'),
+//			array('Module\Module', 'Library\Module'),
 			array('Library', 'lib'),
-			array('Iface', 'interface')
+			array('Iface', 'abstract')
 		);
 		
 		if (is_array($this->patterns)) {

@@ -2,6 +2,7 @@
 
 use Deviant\Library\Autoloader,
 	Deviant\Library\Config,
+	Deviant\Library\Database,
     Deviant\Library\Route,
     Deviant\Library\Router,
     Deviant\Library\Dispatcher,
@@ -12,18 +13,17 @@ use Deviant\Library\Autoloader,
 require_once('lib/autoloader.php');
 new Autoloader;
 
-$request = new Request();
-$response = new Response;
+$config		= new Config('production');
+$request	= new Request();
+$response	= new Response;
 $dispatcher = new Dispatcher;
 
-$routes = array();
-$routes[] = new Route('index', 'Deviant\Module\Index');
-$routes[] = new Route('test', 'Deviant\Module\Test');
-$routes[] = new Route('error', 'Deviant\Module\Error');
+$routes		= array();
+$routes[]	= new Route('index', 'Deviant\Module\Index');
+$routes[]	= new Route('test', 'Deviant\Module\Test');
+$routes[]	= new Route('error', 'Deviant\Module\Error');
 
 $router = new Router($routes);
 
-
-
-$module = new Module($router, $dispatcher);
+$module = new Module($router, $dispatcher, $config);
 $module->run($request, $response);

@@ -1,10 +1,9 @@
 <?php
 
 namespace Deviant\Module;
-use Deviant\Library\Iface\Request,
-	Deviant\Library\Iface\Response;
+use Deviant\Library\Module;
 
-class Error implements Action {
+class Error extends Module {
 	
 	public function start($r, $r) {
 		echo 'error called';
