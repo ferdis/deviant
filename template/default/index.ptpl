@@ -1,0 +1,8 @@
+<?php
+
+include('header.ptpl');
+
+echo '<strong>' . $this->name . '</strong>';
+echo '<br />- Deviant';
+
+include('footer.ptpl');
