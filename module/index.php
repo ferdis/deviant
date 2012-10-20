@@ -1,15 +1,15 @@
 <?php
 
 namespace Deviant\Module;
-use Deviant\Library\Module\Staff;
+use Deviant\Library\Module\Guest;
 
 
-class Index extends Staff {
+class Index extends Guest {
 	
 	public $minRole = 'moderator';
 	
 	public function start() {
-		$this->response->notFound();
+		
 		echo 'ellos from ' . __METHOD__;
 	}
 }

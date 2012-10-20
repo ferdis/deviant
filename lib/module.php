@@ -28,7 +28,7 @@ class Module implements Iface\Module {
 	}
 
 	public function createModule(Iface\Route $route, Iface\Request $request, Iface\Response $response) {
-		return new $route->moduleClass($this->db, $request, $route);
+		return new $route->moduleClass($this->db, $request, $response);
 	}
 
 }

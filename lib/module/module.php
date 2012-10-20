@@ -9,7 +9,7 @@ namespace Deviant\Library\Module;
  */
  class Module implements Iface\Action {
 	
-	protected $db, $request, $response;
+	protected $db, $request, $response, $view;
 	 
 	public function __construct($db, $request, $response) {
 		$this->db = $db;
@@ -19,5 +19,9 @@ namespace Deviant\Library\Module;
 	
 	public function start() {
 		return;
+	}
+	
+	public function postDispatch() {
+		$this->response->ok();
 	}
 }

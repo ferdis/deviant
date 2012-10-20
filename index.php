@@ -4,6 +4,7 @@
  * @copyright	Deviant, 2012. 
  */
 
+
 use Deviant\Library\Autoloader,
 	Deviant\Library\Config,
 	Deviant\Library\Database,
@@ -17,8 +18,8 @@ use Deviant\Library\Autoloader,
 require_once('lib/autoloader.php');
 new Autoloader;
 
-$config		= new Config('production');
-$request	= new Request();
+$config		= new Config('development');
+$request	= new Request;
 $response	= new Response;
 $dispatcher = new Dispatcher;
 

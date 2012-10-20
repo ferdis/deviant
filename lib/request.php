@@ -28,6 +28,10 @@ class Request implements Iface\Request {
 	}
 
 	public function getUri() {
+		if (!array_key_exists('PATH_INFO', $_SERVER)) {
+			$_SERVER['PATH_INFO'] = 'index';
+		}
+		
 		if (empty($this->uri)) {
 			$this->uri = str_replace('/', null, $_SERVER['PATH_INFO']);
 		}

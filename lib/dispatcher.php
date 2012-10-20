@@ -16,12 +16,8 @@ class Dispatcher implements Iface\Dispatcher {
 		
 		if (method_exists($module, 'preDispatch')) {
 			$module->postDispatch();
-		} else {
-			if (count($response->getHeaders()) == 0) {
-				$response->ok();
-			} else {
-				$response->send();
-			}
 		}
+		
+		$response->send();
 	}
 }

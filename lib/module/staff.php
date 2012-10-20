@@ -13,7 +13,9 @@ class Staff extends Module implements Iface\Action {
 	
 	public $minRole, $maxRole;
 	
-	public function __construct() {
+	public function __construct($db, $request, $response) {
 		echo \strval($this->minRole) . ' -> ' . \strval($this->maxRole) . '<br />';
+		
+		parent::__construct($db, $request, $response);
 	}
 }

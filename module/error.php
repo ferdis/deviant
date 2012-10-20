@@ -1,11 +1,11 @@
 <?php
 
 namespace Deviant\Module;
-use Deviant\Library\Module;
+use Deviant\Library\Module\Module;
 
 class Error extends Module {
 	
-	public function start($r, $r) {
+	public function start() {
 		echo 'error called';
 	}
 }
